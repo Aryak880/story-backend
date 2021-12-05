@@ -2,9 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node /src/server.js",
+    "start": "node src/server.js",
     "dev": "env-cmd -f config/dev.env nodemon src/server.js"
   },
   "keywords": [],
@@ -12,7 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "commander": "^8.3.0",
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.8",
@@ -20,7 +22,6 @@
     "validator": "^13.6.0"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
     "env-cmd": "^10.1.0"
   }
 }
