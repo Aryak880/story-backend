@@ -43,7 +43,6 @@ router.post('/user/login', async (req, res) => {
 // GET/me
 // private
 router.get('/user/:id', auth, async (req, res) => {
-    if(req.user.isAdmin){
         try {
             const user = await User.findById(req.params.id)
 
@@ -55,10 +54,8 @@ router.get('/user/:id', auth, async (req, res) => {
         } catch (error) {
             res.status(500).send(error)
         }
-    }else{
-        res.status(400).send({error: "You are not allowed to do so!"})
     }
-})
+)
 
 // // Delete/user/:id
 // // private
