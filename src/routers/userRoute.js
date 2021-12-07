@@ -201,6 +201,13 @@ router.patch('/update/user/:id', auth, async (req, res) => {
         try {
             // updates.forEach(e => req.user[e] = req.body[e])
             // await req.user.save()
+            // await bcrypt.hash(user.password, 8)
+
+            if(req.body.password !== ''){
+                req.body.password = await bcrypt.hash(user.password, 8)
+            }
+
+
             const user = await User.updateOne({_id: req.params.id}, {...req.body})
 
             res.status(302).send(user)
