@@ -203,8 +203,8 @@ router.patch('/update/user/:id', auth, async (req, res) => {
             // await req.user.save()
             // await bcrypt.hash(user.password, 8)
 
-            if(req.body.password !== ''){
-                req.body.password = await bcrypt.hash(user.password, 8)
+            if(req.body.password !== undefined){
+                req.body.password = await bcrypt.hash(req.body.password, 8)
             }
 
 
