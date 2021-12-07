@@ -185,4 +185,32 @@ router.patch('/users/:id', auth, async(req, res) => {
     }
 })
 
+// Only by Admin
+// Update user profile 
+router.patch('/update/user/:id', auth, async (req, res) => {
+
+    if(req.user.isAdmin){
+        const updates = Object.keys(req.body)
+        const allowUpdates = ['name', 'age', 'password', 'email', 'gender', 'instagram', 'facebook']
+        const isValidOpretion = updates.every(update => allowUpdates.includes(update))
+
+        if(!isValidOpretion)
+            return res.status(400).send({error: 'Invalid updates!'})
+
+        try {
+            // updates.forEach(e => req.user[e] = req.body[e])
+            // await req.user.save()
+            const user = await User.updateOne({_id: req.params.id}, {...req.body})
+
+            res.status(302).send(user)
+        } catch (e) {
+            console.log(e)
+            res.status(400).send(e)
+        }
+    }else{
+        res.status(400).send({error: "You are not allowed to do so!"})
+    }
+
+})
+
 module.exports = router
