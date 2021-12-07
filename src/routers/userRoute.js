@@ -42,7 +42,7 @@ router.post('/user/login', async (req, res) => {
 
 // GET/me
 // private
-router.get('/user/:id', auth, async (req, res) => {
+router.get('/user/:id', async (req, res) => {
         try {
             const user = await User.findById(req.params.id)
 
