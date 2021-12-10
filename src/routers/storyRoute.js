@@ -114,7 +114,16 @@ router.post('/me/story', auth, async(req, res) => {
         }
     })
 
-
+// GET/story-search/:query
+    router.get('/story-search/:query', async (req, res) => {
+        try {
+            const s1 = await Story.find({title: { "$regex": req.params.query, "$options": "i" }})
+            const s2 = await Story.find({category: { "$regex": req.params.query, "$options": "i" }})
+            res.status(200).send([...s1, ...s2])
+        } catch (error) {
+            res.status(400).send(error)
+        }
+    })
 
 // test
     // router.patch('/me/story/:id', auth, async (req, res) => {
