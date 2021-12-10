@@ -119,9 +119,39 @@ router.post('/me/story', auth, async(req, res) => {
         try {
             const s1 = await Story.find({title: { "$regex": req.params.query, "$options": "i" }})
             const s2 = await Story.find({category: { "$regex": req.params.query, "$options": "i" }})
-            res.status(200).send([...s1, ...s2])
+            const s3 = await Story.find({story: { "$regex": req.params.query, "$options": "i" }})
+            
+            const temp = [...s1, ...s2, ...s3]
+
+            // Display the list of array objects
+            console.log(temp);
+      
+            // Declare a new array
+            let newArray = [];
+              
+            // Declare an empty object
+            let uniqueObject = {};
+              
+            // Loop for the array elements
+            for (let i in temp) {
+      
+                // Extract the title
+                objTitle = temp[i]['_id'];
+      
+                // Use the title as the index
+                uniqueObject[objTitle] = temp[i];
+            }
+              
+            // Loop to push unique object into array
+            for (i in uniqueObject) {
+                newArray.push(uniqueObject[i]);
+            }
+
+            // console.log(temp)
+            res.status(200).send(newArray)
         } catch (error) {
             res.status(400).send(error)
+            console.log(error)
         }
     })
 
