@@ -212,7 +212,6 @@ router.patch('/update/user/:id', auth, async (req, res) => {
 
             res.status(302).send(user)
         } catch (e) {
-            console.log(e)
             res.status(400).send(e)
         }
     }else{
@@ -220,5 +219,7 @@ router.patch('/update/user/:id', auth, async (req, res) => {
     }
 
 })
+
+
 
 module.exports = router

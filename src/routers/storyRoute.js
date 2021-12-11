@@ -50,6 +50,27 @@ router.post('/me/story', auth, async(req, res) => {
         }
     })
 
+// GET/Number of Stories
+    router.get('/stories/numbers', async (req, res) => {
+        try {
+            const number = await Story.find({}).countDocuments()
+            res.status(200).send({numberOfStories: number})
+        } catch (error) {
+            res.status(400).send(error)
+        }
+    })
+
+
+// GET/stories/:page-number
+    router.get('/stories/:pnumber', async (req, res) => {
+        try {
+            const stories = await Story.find({}).limit(10).skip(10*(req.params.pnumber - 1))
+            res.status(200).send(stories)
+        } catch (error) {
+            res.status(400).send(error)
+        }
+    })
+
 // DELETE/story/:id
 // It will delete story
     router.delete('/me/story/:id', auth, async (req, res) => {
@@ -121,10 +142,7 @@ router.post('/me/story', auth, async(req, res) => {
             const s2 = await Story.find({category: { "$regex": req.params.query, "$options": "i" }})
             const s3 = await Story.find({story: { "$regex": req.params.query, "$options": "i" }})
             
-            const temp = [...s1, ...s2, ...s3]
-
-            // Display the list of array objects
-            console.log(temp);
+            const temp = [...s1, ...s2, ...s3]        
       
             // Declare a new array
             let newArray = [];
@@ -151,7 +169,6 @@ router.post('/me/story', auth, async(req, res) => {
             res.status(200).send(newArray)
         } catch (error) {
             res.status(400).send(error)
-            console.log(error)
         }
     })
 
